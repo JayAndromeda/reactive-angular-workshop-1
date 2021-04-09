@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
@@ -47,6 +47,12 @@ const LIMITS = [LIMIT_LOW, LIMIT_MID, LIMIT_HIGH];
 })
 export class HeroService {
     limits = LIMITS;
+
+    searchBS = new BehaviorSubject('');
+    pageBS = new BehaviorSubject('');
+    limitBS = new BehaviorSubject(LIMIT_LOW);
+
+    changes$ = combineLatest([this.searchBS, this.pageBS, this.limitBS]);
 
     heroes$: Observable<Hero[]> = this.http
         .get(HERO_API, {
