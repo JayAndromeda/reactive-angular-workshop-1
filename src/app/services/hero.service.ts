@@ -48,9 +48,14 @@ const LIMITS = [LIMIT_LOW, LIMIT_MID, LIMIT_HIGH];
 export class HeroService {
     limits = LIMITS;
 
-    private searchBS = new BehaviorSubject('');
+    private searchBS = new BehaviorSubject('hulk');
     private pageBS = new BehaviorSubject('');
     private limitBS = new BehaviorSubject(LIMIT_LOW);
+
+    search$ = this.searchBS.asObservable()
+    page$ = this.pageBS.asObservable()
+    limit$ = this.limitBS.asObservable();
+    userPage$ = this.page$.pipe(map(val => val + 1))
 
     changes$ = combineLatest([this.searchBS, this.pageBS, this.limitBS]);
 

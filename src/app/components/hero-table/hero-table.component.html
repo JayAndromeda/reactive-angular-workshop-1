@@ -1,10 +1,10 @@
 <div class="tool-bar">
     <span class="search-tool">
         <label for="herosearch">Search: </label>
-        <input name="herosearch" />
+        <input name="herosearch" [value]="hero.search$ | async"/>
     </span>
     <span class="page-tool">
-        <label>Page ? of ? : </label>
+        <label>Page {{hero.userPage$ | async}} of ? : </label>
         <span class="buttons">
             <button class="prev">Prev</button>
             <button class="next">Next</button>
@@ -13,7 +13,8 @@
     <span class="result-tool">
         <label>Show Results: </label>
         <span class="buttons">
-            <button *ngFor="let limit of hero.limits">
+            <button *ngFor="let limit of hero.limits"
+            [disabled]="(hero.limit$ | async) === limit">
                 {{ limit }}
             </button>
         </span>
